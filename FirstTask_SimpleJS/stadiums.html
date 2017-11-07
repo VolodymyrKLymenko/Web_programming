@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset = "utf-8">
+		<title>Ukrainian Football</title>
+
+		<link rel="stylesheet" type="text/css" href="styles.css">
+		<script src="scripts.js"></script>
+	</head>
+	<body>
+		<header>Stadiums</header>
+			<div class="stadium_box">
+				<img class="kyiv" src="http://static.panoramio.com/photos/large/71535926.jpg">
+				<img class="kyiv" src="http://sportanalytic.com/uploads/images/default/70215421.jpg">
+				<img class="kyiv" src="http://kievvlast.com.ua/project/resources/2014/10/tBjpNhn2.jpg">
+				<img class="kyiv" src="http://rian.com.ua/images/102189/34/1021893404.jpg">
+
+				<span class="name_stadium">NSC Olimpiyskiy Stadium</span>
+				
+				<button class="button" onclick="showOlimpiyskiy.previous()">Previous</button>
+				<button class="button" onclick="showOlimpiyskiy.next()">Next</button>
+			</div>
+
+			<div class="stadium_box">
+				<img class="arenaLviv" src="http://xsport.ua/upload/news-photos/23-05-2017-ca/lwiwarena.jpg">
+				<img class="arenaLviv" src="http://leopolis.news/wp-content/uploads/2016/07/001_0.jpg">
+				<img class="arenaLviv" src="http://arenalviv.com.ua/uploads/images/pages/461/750/img_7467small.jpg">
+				<img class="arenaLviv" src="http://galinfo.com.ua/media/gallery/full/a/r/arena_lviv_71.jpg">
+				
+				<span class="name_stadium">Arena Lviv</span>
+
+				<button class="button" onclick="showLviv.previous()">Previous</button>
+				<button class="button" onclick="showLviv.next()">Next</button>
+			</div>
+
+			<br>
+
+			<div class="stadium_box">
+				<img class="oskMetalist" src="http://xsport.ua/upload/news-photos/11-09-2016-chern-a/fdbvnmughbv.jpg">
+				<img class="oskMetalist" src="http://metalist.ua/files/image/all/stad.jpg">
+				<img class="oskMetalist" src="http://fc-metalist.com/club/foto/metalist.jpg">
+				<img class="oskMetalist" src="https://img.depo.ua/745xX/Aug2017/288757.jpg">
+				
+				<span class="name_stadium">OSC Metalist</span>
+
+				<button class="button" onclick="showKharkiv.previous()">Previous</button>
+				<button class="button" onclick="showKharkiv.next()">Next</button>
+			</div>
+
+			<div class="stadium_box">
+				<img class="chornomorets" src="https://newsone.ua/wp-content/uploads/2016/07/121408.jpg">
+				<img class="chornomorets" src="http://nv.ua/img/article/646/74_main.jpg">
+				<img class="chornomorets" src="http://news.liga.net/upload/iblock/494/494ad99b6460ca5539df75cd9d461f3b.jpg">
+				<img class="chornomorets" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6IsofGhjh_B2aaJ_do0SZJyLofPcry3Hsm8z1uVKIlE4hxXdJ">
+
+				<span class="name_stadium">Chernomorets Stadium</span>
+
+				<button class="button" onclick="showOdesa.previous()">Previous</button>
+				<button class="button" onclick="showOdesa.next()">Next</button>
+			</div>
+
+		<script>
+			var showOlimpiyskiy = slide.slideshow(".kyiv");
+			var showLviv = slide.slideshow(".arenaLviv");
+			var showKharkiv = slide.slideshow(".oskMetalist");
+			var showOdesa = slide.slideshow(".chornomorets");
+		</script>
+	</body>
+</html>
