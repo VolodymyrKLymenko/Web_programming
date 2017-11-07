@@ -1,0 +1,13 @@
+{
+	"port": 3000,
+	"connection_string": "postgres://postgres:pokerworld@localhost:5432/web_store_data",
+	"session": {
+		"secret": "qqq134rwwsd",
+		"key": "sid",
+		"cookie": {
+			"path": "/",
+			"httpOnly": true,
+			"maxAge": null
+		}
+	}
+}
