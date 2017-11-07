@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Catalog</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script>
+        function buyThing(index)
+        {
+          var xhr = new XMLHttpRequest();
+
+          var host = 'http://localhost:3000/buyThink/' + index;
+
+          xhr.open('Post', host, false);
+
+          xhr.send();
+
+          if (xhr.status != 200) {
+            alert(xhr.responseText + xhr.status + ': ' + xhr.statusText );
+          }
+          else {
+            alert( xhr.responseText );
+          }
+        }
+    </script>
+  </head>
+  <body>
+    <header>
+      Web_store
+    </header>
+    <nav>
+      <a href="http://localhost:3000/myPage">Personal_Cabinet</a>
+      <a href="http://localhost:3000/">Catalog</a>
+    </nav>
+    <aside>
+      <a href="http://localhost:3000/login">Log In</a>
+      <a href="http://localhost:3000/registr">Registr</a>
+    </aside>
+    <section>
+      <%- body %>
+    </section>
+    <footer>
+      Created by Klymenko Volodymyr.
+    </footer>
+  </body>
+</html>
