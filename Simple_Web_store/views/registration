@@ -1,0 +1,11 @@
+<%- layout('layouts/page') -%>
+
+		<form method="post" action = "registrations">
+			<span>Enter your data</span>
+
+			<p>Login: <br/><input name = "username"/></p>
+			<p>Surname: <br/><input name = "user_surname"/></p>
+			<p>Password: <br/><input name = "password" type = "password"/></p>
+			<p>Repeat Password: </b><br/><input name = "password_repeat" type = "password"/></p>
+			<button name = "registrations" class = "button">Sign In</button>
+		</form>
