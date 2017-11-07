@@ -1,0 +1,25 @@
+<%- layout('layouts/page') -%>
+
+    <% if(user) { %>
+        <p>User <%- user -%> </p></br>
+    <% } else { %>
+        <p>Unregister user</p>
+    <% } %> 
+
+      <% for(var i=0; i<costs.length; ++i) { %>
+        <div class = "block">
+          <img src="img/<%- srcs[i] %>" width=300>
+          
+          <div class="thing_info">
+          	<span>Cost: <%- costs[i] %>  </span>
+          	<br>
+          	<span>Name: <%- names[i] %></span>
+          </div>
+
+          <a class="itemHref" href="http://localhost:3000/items/<%- indexes[i] -%>">Detail</a>
+          <button onclick="buyThing(<%- indexes[i] -%>)" class="button" type="button">Buy</button>
+        </div>
+      <% } %>
+    
+   <% if(page-1>= 0) { %>  <a href = <%= "/?page="+(page-1) %>>Previous</a> <% } %>
+   <% if(p1*k < length) { %> <a href = <%= "/?page="+(p1) %> >Next</a> <% } %>
