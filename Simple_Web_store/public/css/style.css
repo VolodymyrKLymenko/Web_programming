@@ -17,6 +17,13 @@ header {
     border-radius: 20px;
 }
 
+header a{
+    float: left;
+    text-align: left;
+    font-size: 20px;
+    margin: 10px;
+}
+
 
 footer{
     background-color: rgb(255, 121, 58);
@@ -34,7 +41,6 @@ nav{
     margin-left: 23%;
 
     padding: 20px;
-
     width: 50%;
 
     border-radius: 15px;
@@ -48,12 +54,11 @@ a{
         text-decoration: none;
 }
 nav a{
-    margin: 10px;
+    margin: 20px;
 
-    font-size: 30px;
+    font-size: 20px;
     padding: 10px;
 
-    transition: 0.5s;
     text-decoration: none;
 }
 
@@ -62,11 +67,8 @@ nav a:hover{
 
     border-radius: 10px;
 
-    padding: 10px;
 
     width: 70px;
-
-    font-size: 35px;
 }
 
 section{
@@ -100,7 +102,29 @@ section{
     font-family: "Comic Sans MS";
     font-size: 17px;
 
-    width: 40%;
+    width: 43.5%;
+    min-height: 370px;
+
+    border: dotted;
+}
+
+.block_selected{
+    background-color: rgb(128, 144, 160);
+
+    float: left;
+
+    padding: 10px;
+
+    margin-left: 2%;
+    margin-right: 2%;
+
+    margin-top: 2%;
+    margin-bottom: 5%;
+
+    font-family: "Comic Sans MS";
+    font-size: 17px;
+
+    width: 80%;
     min-height: 370px;
 
     border: dotted;
@@ -207,4 +231,10 @@ form input:hover{
 aside{
 
     display:  inline-block;
+}
+
+.nextPrevPage
+{
+    text-align: center;
+    margin: 20px;
 }

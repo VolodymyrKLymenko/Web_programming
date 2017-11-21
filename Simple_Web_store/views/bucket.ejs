@@ -1,0 +1,25 @@
+<%- layout('layouts/page') -%>
+
+    <% if(user) { %>
+        <p>User <%- user -%> </p></br>
+    <% } else { %>
+        <p>Unregister user</p>
+    <% } %> 
+
+    <p>You choose this things: </p>
+    
+    <button class="button">Make order</button>
+
+      <% for(var i=0; i < names.length; ++i) { %>
+        
+        <div class = "block_selected">
+          <p><%- i+ 1 -%> </p>
+          <img src="img/<%- srcs[i] %>" width=300>
+          
+          <div class="thing_info">
+          	<span>Cost: <%- costs[i] %>  </span>
+          	<br>
+          	<span>Name: <%- names[i] %></span>
+          </div>
+        </div>
+      <% } %>

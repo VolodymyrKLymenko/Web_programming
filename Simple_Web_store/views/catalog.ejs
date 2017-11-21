@@ -20,6 +20,8 @@
           <button onclick="buyThing(<%- indexes[i] -%>)" class="button" type="button">Buy</button>
         </div>
       <% } %>
-    
-   <% if(page-1>= 0) { %>  <a href = <%= "/?page="+(page-1) %>>Previous</a> <% } %>
-   <% if(p1*k < length) { %> <a href = <%= "/?page="+(p1) %> >Next</a> <% } %>
+
+    <div class="nextPrevPage">
+      <% if(page-1 >= 0)   { %> <a href = <%= "/?page="+(page-1) %> > Previous </a> <% } %>
+      <% if(p1*k < length) { %> <a href = <%= "/?page="+(p1)     %> > Next     </a> <% } %>
+    </div>

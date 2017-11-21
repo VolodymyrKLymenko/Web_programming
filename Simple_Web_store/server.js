@@ -43,11 +43,8 @@ app.post('/signup', function (req, res) {
 	var exist = false;
 
 	var pas1 = req.body.password;
-	var pas2 = req.body.password_repeat;
 	var login = req.body.username;
 		
-	if(pas1 == pas2)
-	{
 		pg.connect(conStr, (err, client, done) => {
 			if(err) {
 				done();
@@ -62,7 +59,6 @@ app.post('/signup', function (req, res) {
 					exist = true;
 					req.session.user = row.user_name;
 					req.session.admin = row.is_admin;
-					req.session.store = [];
 				}
 			});
 				
@@ -81,12 +77,6 @@ app.post('/signup', function (req, res) {
 				}
 			});
 		});
-	}
-	else
-	{
-		req.session.destroy();
-		res.render('loginPage');
-	}
 });
 
 app.get('/registr', function(req, res){
@@ -171,7 +161,7 @@ app.get('/', function(req,res){
 				}
 
 				var j = +0;
-				for (var i =  start_point; i < end_point ; i++) {
+				for (var i =  0; i < end_point ; i++) {
 						
 					values.costs[j] = result.rows[i].price;
 					values.names[j] = result.rows[i].name;
@@ -204,8 +194,9 @@ app.get('/items/:id', function(req,res){
 		}
 
 
-		const query = client.query(('SELECT * FROM things WHERE things.id = '+req.params.id+ ';'), function(err, result) {
-			
+		const query = client.query(('SELECT * FROM things WHERE things.id = ' + req.params.id+ ';'), function(err, result) {
+			console.log(req.params.id);
+
 			value.cost_ = result.rows[0].price;
 			value.name_ = result.rows[0].name;
 			value.src_ = result.rows[0].img_src;
@@ -219,14 +210,12 @@ app.get('/items/:id', function(req,res){
 	});
 });
 
-
 app.post('/buyThink/:id', function(req,res){
 	if(!req.session.user)
 		res.send("At first you must registr");
 	else
 	{
 		pg.connect(conStr, (err, client, done) => {
-			var value = { cost_: "", name_: "", src_: "", count: 0};
 
 			if(err) {
 			  	done();
@@ -236,28 +225,70 @@ app.post('/buyThink/:id', function(req,res){
 
 
 			const query = client.query('SELECT * FROM things WHERE things.id = '+req.params.id+ ';', function(err, result) {
-				value.cost_ = result.rows[0].price;
-				value.name_ = result.rows[0].name;
-				value.src_ = result.rows[0].img_src;
-				value.count = result.rows[0].count;
 
-				if(value.count > 0)
-					client.query("UPDATE things SET count = " + (value.count - 1) +" WHERE id = " + req.params.id + ";");
+				if(result.rows[0].count > 0)
+				{
+					if(!req.session.store)
+					{
+						req.session.store = [];
+						req.session.store[0] = result.rows[0].id;
+					}
+					else
+						req.session.store[req.session.store.length+1] = result.rows[0].id;
+				}
+				else
+					res.send("Sorry. These things are over!");
+					
 			});
 
 			query.on('end', () => {
 				done();
 
-				if(value.count <= 0 )
-					res.send("Sorry. These things are over!");
-				else
-				{	
-
-					res.send("You buy this thing");
-				}
+				res.send("You buy this thing");
 			});
 		});
 	}
+});
+
+app.get('/bucket', function(req,res)
+{
+		var values = { user: "", isAdmin: false, costs: [], names: [], srcs: []};
+		values.user = req.session.user;
+		values.isAdmin = req.session.admin;
+
+	pg.connect(conStr, (err, client, done) => {
+		if(err) {
+			done();
+			console.log(err);
+			return res.status(500).json({success: false, data: err});
+		}
+
+		const query = client.query('SELECT * FROM things;', function(err, result) {
+
+			var j = 0;
+			if(req.session.store)
+			{
+				for (var k = 0; k <= req.session.store.length; k++) 
+				{
+					for (var i =  0; i < result.rows.length; i++) 
+					{
+						if(result.rows[i].id == req.session.store[k])
+						{
+							values.costs [j] = result.rows[i].price;
+							values.names [j] = result.rows[i].name;
+							values.srcs  [j++] = result.rows[i].img_src;
+						}
+					}
+				}
+			}
+
+		});
+			
+		query.on('end', () => {
+			done();
+			res.render('bucket', values);
+		});
+	});
 });
 
 app.use(function(req, res, next) {
