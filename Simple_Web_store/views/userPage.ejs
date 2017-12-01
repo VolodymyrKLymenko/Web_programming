@@ -1,0 +1,12 @@
+<%- layout('layouts/page') -%>
+
+
+<p>User: <%- user_name -%> </p>
+
+<ul>
+	<% for(var i = 0; i < thing_prices.length; ++i) { %>
+
+  		<li>Name: <%- thing_names[i] -%>  Price: <%- thing_prices[i] -%></li>
+
+  	<% } %>
+</ul>

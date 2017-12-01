@@ -34,7 +34,6 @@ app.use(session({
     cookie: config.get('session:cookie')
 }));
 
-
 app.get('/login', function(req,res) {
 	req.session.destroy();
 	res.render('loginPage');
@@ -59,6 +58,7 @@ app.post('/signup', function (req, res) {
 					exist = true;
 					req.session.user = row.user_name;
 					req.session.admin = row.is_admin;
+					req.session.user_id = row.id;
 				}
 			});
 				
@@ -68,7 +68,7 @@ app.post('/signup', function (req, res) {
 				{
 					console.log("You successfuly log in web store");
 
-					res.render('personalCabinet', {user_name: req.session.user, is_admin: req.session.admin});
+					res.render('welcomePage', {user: req.session.user});
 				}
 				else
 				{
@@ -84,9 +84,7 @@ app.get('/registr', function(req, res){
 });
 app.post('/registrations', function (req, res) {
 	var auth = false;
-	console.log(req.body.username);
-	console.log(req.body.password);
-	console.log(req.body.user_surname);
+
 
 	if (!req.body.username || !req.body.password || !req.body.user_surname) {
 		console.log('failed registration');
@@ -121,7 +119,41 @@ app.get('/myPage', function(req, res){
 	}
 	else
 	{
-		res.render('personalCabinet', {user_name: req.session.user, is_admin: req.session.admin})
+		pg.connect(conStr, (err, client, done) => {
+
+			if(err) {
+		  		done();
+		  		console.log(err);
+		  		return res.status(500).json({success: false, data: err});
+			}
+		
+			var values = {user_name: "", is_admin: false, thing_names: [], thing_prices: []};
+			values.user_name = req.session.user;
+			values.is_admin  = req.session.admin;
+
+			const query = client.query('SELECT orders.user_id, things.name, things.price FROM orders, things WHERE orders.thing_id = things.id;', function(err, result) {
+
+				var j = 0;
+				for (var i =  0; i < result.rows.length ; i++) {
+						
+					if(result.rows[i].user_id ==  req.session.user_id)
+					{
+						values.thing_prices[j] = result.rows[i].price;
+						values.thing_names[j++]  = result.rows[i].name;
+					}
+				};
+			});
+
+			query.on('end', () => {
+		  		done();
+
+		  		if(req.session.admin)
+					res.render('adminPage', values);
+				else
+					res.render('userPage', values);
+		  	});
+		
+		});
 	}
 });
 
@@ -195,7 +227,6 @@ app.get('/items/:id', function(req,res){
 
 
 		const query = client.query(('SELECT * FROM things WHERE things.id = ' + req.params.id+ ';'), function(err, result) {
-			console.log(req.params.id);
 
 			value.cost_ = result.rows[0].price;
 			value.name_ = result.rows[0].name;
@@ -274,8 +305,8 @@ app.get('/bucket', function(req,res)
 					{
 						if(result.rows[i].id == req.session.store[k])
 						{
-							values.costs [j] = result.rows[i].price;
-							values.names [j] = result.rows[i].name;
+							values.costs [j]   = result.rows[i].price;
+							values.names [j]   = result.rows[i].name;
 							values.srcs  [j++] = result.rows[i].img_src;
 						}
 					}
