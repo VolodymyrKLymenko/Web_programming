@@ -27,7 +27,7 @@ slide.slideshow = function (classPhoto)
 
   curPh.display = function (pos) 
   {
-	var index;
+	  var index;
   	var len = (arrOfPhoto).length;
 
   	for (index = 0; index < len; index++) 
@@ -95,18 +95,4 @@ slide.slideshow = function (classPhoto)
     (document.getElementById("generalArticle").childNodes[5]).style.display = "none";
     this.innerHTML = "Show";
   }
-};
-
-document.getElementById('generalSection').onmouseover = function()
-{
-  var startFontSize = 23;
-
-    for (var i = 1000; i <= 200000; i++) 
-    {
-      if(i % 1000 == 0)
-      {
-        document.getElementById('generalSection').style.setProperty("font-size", ("" + startFontSize + "px"));
-        ++startFontSize; 
-      }
-    };
 };
